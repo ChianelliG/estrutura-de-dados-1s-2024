@@ -1,41 +1,52 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-    int n, num, menor, maior;
+int main(int argc, char* argv[]){
     
-    printf("Digite a quantidade de numeros a serem inseridos: ");
-    scanf("%d", &n);
-    
-    if (n <= 0) {
-        printf("Erro: A quantidade de numeros deve ser maior que zero.\n");
-        return 1;
-    }
-    
-    printf("Digite %d numeros inteiros:\n", n);
-    scanf("%d", &num);
-    
-    menor = num;
-    maior = num;
-    for (int i = 1; i < n; i++) {
-        scanf("%d", &num);
-        
-        if (num < menor) {
-            menor = num;
+    int qtd_n    = argc - 1;
+    int soma_n   = 0;
+    float med_n  = 0;
+    int menor_n  = atoi(argv[1]);
+    int maior_n  = atoi(argv[1]);
+    int vetor_ord_n[qtd_n];
+
+    for(int i = 1; i <= qtd_n; i++){
+        int n = atoi(argv[i]);
+        vetor_ord_n[i-1] = n;
+        soma_n += n;
+
+        if(menor_n > n){
+            menor_n = n;
         }
-        
-        if (num > maior) {
-            maior = num;
+
+        if(n > maior_n){
+            maior_n = n;
+        }
+
+    }
+
+    med_n = (float) soma_n / qtd_n;
+
+    printf("Quantidade de numeros recebidos: %d\n", qtd_n);
+    printf("Valor medio dos numeros: %.2f\n", med_n);
+    printf("Menor numero: %d\n", menor_n);
+    printf("Maior numero: %d\n", maior_n);
+
+    for(int i = 0; i < qtd_n-1; i++){
+        for(int j = i; j < qtd_n; j++){
+            if(vetor_ord_n[i] > vetor_ord_n[j]){
+                int aux = vetor_ord_n[j];
+                vetor_ord_n[j] = vetor_ord_n[i];
+                vetor_ord_n[i] = aux;
+            }
         }
     }
     
-    printf("Quantidade de numeros: %d\n", n);
-    printf("Menor numero: %d\n", menor);
-    printf("Maior numero: %d\n", maior);
-    printf("Numeros em ordem crescente:\n");
-    for (int i = menor; i <= maior; i++) {
-        printf("%d ", i);
+
+    for(int i = 0; i < qtd_n; i++){
+        printf("%d ", vetor_ord_n[i]);
     }
-    printf("\n");
-    
-    return 0;
+
+
+    exit(0);
 }
